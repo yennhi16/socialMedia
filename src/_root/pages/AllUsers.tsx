@@ -1,15 +1,10 @@
 import UserCard from "@/components/shared/UserCard";
-import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import { Loader } from "lucide-react";
 
-import React from "react";
-
 const AllUsers = () => {
-  const { toast } = useToast();
-
-  const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers();
+  const { data: creators, isLoading } = useGetUsers();
 
   const { user } = useUserContext();
   return (

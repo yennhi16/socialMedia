@@ -3,12 +3,10 @@ import {
   INewPost,
   INewUser,
   IUpdatePost,
-  IUpdateUser,
+  IUpdateUser
 } from "@/types";
 import { account, appwiteConfig, avatars, database, storage } from "./config";
 import { ID, Query } from "appwrite";
-import { error } from "console";
-import UploadFile from "@/components/shared/UploadFile";
 
 export async function createUserAccount(user: INewUser) {
   console.log("createUserAccount");

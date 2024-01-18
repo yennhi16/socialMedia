@@ -6,7 +6,6 @@ import {
   IUpdateUser,
 } from "@/types";
 import {
-  QueryClient,
   useInfiniteQuery,
   useMutation,
   useQuery,
@@ -17,7 +16,6 @@ import {
   addFollowers,
   createPost,
   createUserAccount,
-  deleteFile,
   deleteFollow,
   deletePost,
   deleteSavedPost,
@@ -37,9 +35,7 @@ import {
   updatePost,
   updateUser,
 } from "../appWrite/api";
-
 import { QUERY_KEYS } from "./queryKeys";
-import { string } from "zod";
 
 export const useCreateUserAccountMutation = () => {
   return useMutation({

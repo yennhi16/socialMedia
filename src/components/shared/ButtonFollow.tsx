@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import {
   useAddFollow,
-  useDeleteFollow,
+  useDeleteFollow
 } from "@/lib/react-query/queriesAndMutations";
 import { useToast } from "../ui/use-toast";
 import Loader from "./Loader";

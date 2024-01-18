@@ -2,14 +2,11 @@ import PostCard from "@/components/shared/PostCard";
 import UserCard from "@/components/shared/UserCard";
 import { useUserContext } from "@/context/AuthContext";
 import {
-  useGetCurrentUser,
   useGetPosts,
-  useGetRecentPosts,
-  useGetUsers,
+  useGetUsers
 } from "@/lib/react-query/queriesAndMutations";
-import { Models } from "appwrite";
 import { Loader } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export const Home = () => {

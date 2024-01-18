@@ -1,23 +1,18 @@
 import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
-import { Button } from "@/components/ui/button";
 import {
-  useAddFollow,
-  useDeleteFollow,
-  useGetUserById,
+  useGetUserById
 } from "@/lib/react-query/queriesAndMutations";
-import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   Link,
   Outlet,
   Route,
   Routes,
   useLocation,
-  useParams,
+  useParams
 } from "react-router-dom";
 import LikePosts from "./LikePosts";
 import { useUserContext } from "@/context/AuthContext";
-import { useToast } from "@/components/ui/use-toast";
 import ButtonFollow from "@/components/shared/ButtonFollow";
 
 interface StabBlockProps {

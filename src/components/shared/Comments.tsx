@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { CommentItem } from "./CommentItem";
 import { Icon } from "@iconify/react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import {
   useAddComment,
-  useGetCommentOfPost,
+  useGetCommentOfPost
 } from "@/lib/react-query/queriesAndMutations";
 import Loader from "./Loader";
 import { useUserContext } from "@/context/AuthContext";
 import { IComment } from "@/types";
 import { useToast } from "../ui/use-toast";
-import { set } from "react-hook-form";
 
 interface CommentProps {
   postId: string;

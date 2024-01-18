@@ -5,16 +5,15 @@ import { Input } from "@/components/ui/input";
 import useDebounce from "@/hooks/useDebounce";
 import {
   useGetPosts,
-  useGetRecentPosts,
   useSearchPost,
 } from "@/lib/react-query/queriesAndMutations";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const Explore = () => {
   const { ref, inView } = useInView();
 
-  const { data: posts, fetchNextPage, hasNextPage, isLoading } = useGetPosts();
+  const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
 
   const [searchValue, setSearchValue] = useState("");
 

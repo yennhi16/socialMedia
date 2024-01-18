@@ -1,13 +1,12 @@
 import {
   useDeleteSavedPost,
   useGetCurrentUser,
-  useGetRecentPosts,
   useLikePost,
-  useSavePost,
+  useSavePost
 } from "@/lib/react-query/queriesAndMutations";
 import { checkIsLiked } from "@/lib/utils";
 import { Models } from "appwrite";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Loader from "./Loader";
 import { Comments } from "./Comments";
@@ -16,7 +15,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 

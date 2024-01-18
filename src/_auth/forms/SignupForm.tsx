@@ -35,7 +35,7 @@ export const SignupForm = () => {
 
   const navigate = useNavigate();
 
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { checkAuthUser } = useUserContext();
 
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
@@ -183,7 +183,7 @@ export const SignupForm = () => {
             )}
           />
           <Button className="shad-button_primary" type="submit">
-            {isCreatingAccount ? (
+            {isCreatingAccount || isSigningIn ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>

@@ -1,7 +1,5 @@
 import { useUserContext } from "@/context/AuthContext";
-import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
-import React from "react";
 import { Link } from "react-router-dom";
 import PostStates from "./PostStates";
 import OverFlowText from "./OverFlowText";

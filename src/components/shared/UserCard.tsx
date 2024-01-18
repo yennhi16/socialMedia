@@ -1,15 +1,5 @@
 import { Models } from "appwrite";
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
-import {
-  useAddFollow,
-  useDeleteFollow,
-  useGetCurrentUser,
-} from "@/lib/react-query/queriesAndMutations";
-import { useToast } from "../ui/use-toast";
-import Loader from "./Loader";
-import { getFollowing } from "@/lib/appWrite/api";
 import ButtonFollow from "./ButtonFollow";
 
 type UserCardProps = {

@@ -1,33 +1,28 @@
-import React from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import * as z from "zod";
 import { Textarea } from "../ui/textarea";
-
 import UploadFile from "../shared/UploadFile";
 import { PostValidattion } from "@/lib/validation";
 import { Models } from "appwrite";
 import {
   useCreatePost,
-  useUpdatePost,
+  useUpdatePost
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import Loader from "../shared/Loader";
-import { Progress } from "../ui/progress";
 
 type PostFormProps = {
   post?: Models.Document;

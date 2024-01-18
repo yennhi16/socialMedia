@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import "./global.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleStorageChange = (event: any) => {
+    const handleStorageChange = () => {
       if (
         localStorage.getItem("cookieFallback") === "[]" ||
         localStorage.getItem("cookieFallback") === null

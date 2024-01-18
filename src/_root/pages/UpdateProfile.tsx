@@ -6,23 +6,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Form,
+  Form
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
-
 import {
   useGetUserById,
-  useUpdateUser,
+  useUpdateUser
 } from "@/lib/react-query/queriesAndMutations";
 import { ProfileValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader } from "lucide-react";
-import React from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { z } from "zod";
 

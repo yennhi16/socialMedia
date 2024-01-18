@@ -1,7 +1,6 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 import { Button } from "../ui/button";
-import { Progress } from "../ui/progress";
 import axios from "axios";
 
 type FileUploaderProps = {

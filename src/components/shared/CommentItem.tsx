@@ -1,5 +1,3 @@
-import { IComment } from "@/types";
-import React from "react";
 
 type CommentItemProps = {
   comment?: any;
