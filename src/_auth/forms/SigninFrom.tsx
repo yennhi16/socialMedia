@@ -78,7 +78,7 @@ export const SigninFrom = () => {
         "http://localhost:3000/",
         "http://localhost:3000"
       );
-      // console.log("Session created", session);
+      console.log("Session created", session);
     } catch (error) {
       console.log(error);
     }
