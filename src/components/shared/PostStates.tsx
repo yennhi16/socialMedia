@@ -2,12 +2,11 @@ import {
   useDeleteSavedPost,
   useGetCurrentUser,
   useLikePost,
-  useSavePost,
+  useSavePost
 } from "@/lib/react-query/queriesAndMutations";
 import { checkIsLiked } from "@/lib/utils";
 import { Models } from "appwrite";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import Loader from "./Loader";
 import { Comments } from "./Comments";
 import {
@@ -15,7 +14,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 
@@ -25,7 +24,7 @@ type PostStatesProps = {
 };
 
 const PostStates = ({ post, userId }: PostStatesProps) => {
-  const location = useLocation();
+  // const location = useLocation();
 
   const likesList = post.likes.map((user: Models.Document) => user.$id);
 
