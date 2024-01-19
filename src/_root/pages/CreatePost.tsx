@@ -1,6 +1,4 @@
 import { PostForm } from "@/components/form/PostForm";
-import { Progress } from "@radix-ui/react-progress";
-import React from "react";
 
 export const CreatePost = () => {
   return (

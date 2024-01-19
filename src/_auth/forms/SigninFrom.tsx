@@ -48,10 +48,10 @@ export const SigninFrom = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignInValidation>) {
-    const user = {
-      email: values.email,
-      password: values.password,
-    };
+    // const user = {
+    //   email: values.email,
+    //   password: values.password,
+    // };
 
     const session = await signInAccount({
       email: values.email,
@@ -70,7 +70,7 @@ export const SigninFrom = () => {
       return toast({ title: "Signin failed, Please try again." });
     }
   }
-  const handleSignInGoogle = async (e: any) => {
+  const handleSignInGoogle = async () => {
     isLogInWithGoogle.current = false;
     try {
       const session = await account.createOAuth2Session(
@@ -182,7 +182,7 @@ export const SigninFrom = () => {
             )}
           />
           <Button className="shad-button_primary" type="submit">
-            {isUserLoading ? (
+            {isUserLoading || isSigningIn ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
@@ -202,7 +202,7 @@ export const SigninFrom = () => {
         </form>
       </Form>
       <div
-        onClick={(e) => handleSignInGoogle(e)}
+        onClick={() => handleSignInGoogle()}
         className="shad-button_primary py-[8px] px-[16px] mt-2 rounded-md"
       >
         Sign In with Google

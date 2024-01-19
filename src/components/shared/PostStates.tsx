@@ -2,7 +2,7 @@ import {
   useDeleteSavedPost,
   useGetCurrentUser,
   useLikePost,
-  useSavePost
+  useSavePost,
 } from "@/lib/react-query/queriesAndMutations";
 import { checkIsLiked } from "@/lib/utils";
 import { Models } from "appwrite";
@@ -15,7 +15,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 
@@ -33,7 +33,7 @@ const PostStates = ({ post, userId }: PostStatesProps) => {
 
   const [isSaved, setIsSaved] = useState(false);
 
-  const { mutate: likePost, isLoading: isLikeLoading } = useLikePost();
+  const { mutate: likePost } = useLikePost();
 
   const { mutate: savePost, isLoading: isSaveLoading } = useSavePost();
 
@@ -68,9 +68,9 @@ const PostStates = ({ post, userId }: PostStatesProps) => {
     return savePost({ userId, postId: post.$id });
   };
 
-  const containerStyles = location.pathname.startsWith("/profile")
-    ? "w-full"
-    : "";
+  // const containerStyles = location.pathname.startsWith("/profile")
+  //   ? "w-full"
+  //   : "";
   return (
     <div className="flex justify-between items-center z-20">
       <div className="flex gap-2 mr-5">

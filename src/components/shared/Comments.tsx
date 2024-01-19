@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { CommentItem } from "./CommentItem";
 import { Icon } from "@iconify/react";
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import {
   useAddComment,
-  useGetCommentOfPost
+  useGetCommentOfPost,
 } from "@/lib/react-query/queriesAndMutations";
 import Loader from "./Loader";
 import { useUserContext } from "@/context/AuthContext";
@@ -17,11 +17,13 @@ interface CommentProps {
 }
 
 export const Comments = ({ postId }: CommentProps) => {
-  const { data: comments, isLoading, isError } = useGetCommentOfPost(postId);
+  const { data: comments, isLoading } = useGetCommentOfPost(postId);
 
   const [value, setValue] = useState<string>("");
 
   const [showEmoji, setShowEmoji] = useState(false);
+
+  const theme: Theme = Theme.DARK;
 
   console.log("comment", comments?.documents);
 
@@ -31,7 +33,7 @@ export const Comments = ({ postId }: CommentProps) => {
     isError: addCommentError,
   } = useAddComment();
 
-  const handlePickEmoji = (emojiData: EmojiClickData, event: MouseEvent) => {
+  const handlePickEmoji = (emojiData: EmojiClickData) => {
     setValue((prevValue) => prevValue + emojiData.emoji);
   };
 
@@ -114,7 +116,7 @@ export const Comments = ({ postId }: CommentProps) => {
               height="350px"
               className=" rounded-xl h-[300px]"
               skinTonesDisabled={true}
-              theme="dark"
+              theme={theme}
               onEmojiClick={handlePickEmoji}
             />
           </div>

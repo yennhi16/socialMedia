@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import {
   useAddFollow,
-  useDeleteFollow
+  useDeleteFollow,
 } from "@/lib/react-query/queriesAndMutations";
 import { useToast } from "../ui/use-toast";
 import Loader from "./Loader";
@@ -28,7 +28,6 @@ const ButtonFollow = ({ user, currentUser }: ButtonFollowProps) => {
 
   const { toast } = useToast();
 
-  const [update, setUpdate] = useState<any>(false);
   const {
     mutateAsync: deleteFollow,
     isLoading: loadingDelete,
@@ -55,8 +54,11 @@ const ButtonFollow = ({ user, currentUser }: ButtonFollowProps) => {
   const handleUnFollow = async () => {
     if (checkFollowed) {
       const status = await deleteFollow(checkFollowed?.$id);
+      if (status?.status == "Ok") {
+        setCheckFollowed(false);
+      }
     }
-    setCheckFollowed(false);
+
     if (errorDelete) {
       toast({ title: "UnFollow failed", variant: "destructive" });
       return;

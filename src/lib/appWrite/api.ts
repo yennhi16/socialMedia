@@ -3,7 +3,7 @@ import {
   INewPost,
   INewUser,
   IUpdatePost,
-  IUpdateUser
+  IUpdateUser,
 } from "@/types";
 import { account, appwiteConfig, avatars, database, storage } from "./config";
 import { ID, Query } from "appwrite";
@@ -196,7 +196,7 @@ export async function getUserPost(userId?: string) {
       appwiteConfig.postCollectionId,
       [Query.equal("creator", userId), Query.orderDesc("$createdAt")]
     );
-    if (!posts) return Error;
+    if (!posts) return;
 
     return posts;
   } catch (error) {

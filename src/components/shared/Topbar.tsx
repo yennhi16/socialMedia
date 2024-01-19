@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Button } from "../ui/button";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
 export const Topbar = () => {
-  const { mutate: signOut, isSuccess } = useSignOutAccount();
-  const navigate = useNavigate();
+  const { mutate: signOut } = useSignOutAccount();
+  
   const { user } = useUserContext();
 
   return (
