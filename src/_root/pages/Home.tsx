@@ -3,18 +3,13 @@ import UserCard from "@/components/shared/UserCard";
 import { useUserContext } from "@/context/AuthContext";
 import {
   useGetPosts,
-  useGetUsers
+  useGetUsers,
 } from "@/lib/react-query/queriesAndMutations";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export const Home = () => {
-  // const {
-  //   data: posts,
-  //   isLoading: isPostLoading,
-  //   isError: isErrorPost,
-  // } = useGetRecentPosts();
   const {
     data: posts,
     fetchNextPage,
@@ -25,16 +20,16 @@ export const Home = () => {
   const { ref, inView } = useInView();
   const { user } = useUserContext();
   const [currentUser, setCurrentUser] = useState<any>();
-  useEffect(() => {
-    if (user.id !== "") {
-      setCurrentUser(user);
-    }
-  }, [user]);
   const {
     data: creators,
     isLoading: isUserLoading,
     isError: isErrorCreators,
   } = useGetUsers();
+  useEffect(() => {
+    if (user.id !== "") {
+      setCurrentUser(user);
+    }
+  }, [user]);
   if (isErrorPost || isErrorCreators) {
     return (
       <div className="flex flex-1">
@@ -85,9 +80,10 @@ export const Home = () => {
           <Loader />
         ) : (
           <ul className="grid 2xl:grid-cols-2 gap-6">
-            {creators?.documents.map((creator) => {
+            {creators?.documents.map((creator: any) => {
+              if (creator.$id == currentUser?.id) return;
               return (
-                <li key={creator.$id}>
+                <li key={creator?.$id}>
                   {currentUser?.id && (
                     <UserCard currentUser={currentUser} user={creator} />
                   )}
