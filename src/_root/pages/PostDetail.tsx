@@ -1,14 +1,15 @@
 import GridPostList from "@/components/shared/GridPostList";
+import Loader from "@/components/shared/Loader";
 import PostStates from "@/components/shared/PostStates";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import {
   useDeletePost,
   useGetPostById,
-  useGetUserPost
+  useGetUserPost,
 } from "@/lib/react-query/queriesAndMutations";
 import { timeAgo } from "@/lib/utils";
-import { Loader } from "lucide-react";
+
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const PostDetail = () => {
@@ -23,10 +24,13 @@ const PostDetail = () => {
   const relatedPosts = userPosts?.documents.filter(
     (userPost: any) => userPost.$id !== id
   );
-  const { mutate: deletePost } = useDeletePost();
-  const handleDeletePost = () => {
+  const { mutateAsync: deletePost, isLoading: deleteLoading } = useDeletePost();
+  const handleDeletePost = async () => {
     // console.log(post);
-    deletePost({ postId: id, imageId: post?.imageID });
+    const response = await deletePost({ postId: id, imageId: post?.imageID });
+    if (response?.status == "ok") {
+      navigate("/");
+    }
   };
 
   return (
@@ -66,7 +70,7 @@ const PostDetail = () => {
                 >
                   <img
                     src={
-                      post?.creator.imageUrl ||
+                      post?.creator.imageURL ||
                       "/assets/icons/profile-placeholder.svg"
                     }
                     alt="creator"
@@ -107,13 +111,18 @@ const PostDetail = () => {
                     className={`ost_details-delete_btn ${
                       user.id !== post?.creator.$id && "hidden"
                     }`}
+                    disabled={deleteLoading}
                   >
-                    <img
-                      src={"/assets/icons/delete.svg"}
-                      alt="delete"
-                      width={24}
-                      height={24}
-                    />
+                    {deleteLoading ? (
+                      <Loader />
+                    ) : (
+                      <img
+                        src={"/assets/icons/delete.svg"}
+                        alt="delete"
+                        width={24}
+                        height={24}
+                      />
+                    )}
                   </Button>
                 </div>
               </div>

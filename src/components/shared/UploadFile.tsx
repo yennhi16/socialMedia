@@ -1,7 +1,6 @@
 import { memo, useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 import { Button } from "../ui/button";
-import axios from "axios";
 
 type FileUploaderProps = {
   fieldChange: (files: File[]) => void;
@@ -11,39 +10,22 @@ const UploadFile = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
   const [file, setFile] = useState<File[]>([]);
   console.log(mediaUrl);
   const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
-  const [showProgressBar, setProgressBar] = useState(0);
+
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
-      UploadFile(acceptedFiles);
       setFile(acceptedFiles);
       fieldChange(acceptedFiles);
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
     },
     [file]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".png", ".jpg", ".jpeg", ".svg", ".pdf"],
+      "image/*": [".png", ".jpg", ".jpeg", ".svg"],
     },
     multiple: true,
   });
-  const UploadFile = (data: FileWithPath[]) => {
-    const file = data[0];
-    var formData = new FormData();
-    axios.post("url", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      onUploadProgress: (event) => {
-        // console.log(
-        //   "onUploadProgress",
-        //   Math.round(100 * event.loaded) / event?.total
-        // );
-        // setProgressBar(Math.round(100 * event.loaded) / event?.total);
-      },
-    });
-  };
 
   return (
     <div
@@ -78,11 +60,6 @@ const UploadFile = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
           <Button className="shad-button_dark_4">Select from computer</Button>
         </div>
       )}
-      {/* {showProgressBar == 0 ? (
-        ""
-      ) : (
-        <Progress value={showProgressBar} className="h-[5px] mb-6" />
-      )} */}
     </div>
   );
 };
