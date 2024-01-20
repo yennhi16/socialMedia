@@ -3,6 +3,7 @@ import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 import PostStates from "./PostStates";
 import OverFlowText from "./OverFlowText";
+import ReactPlayer from "react-player";
 
 type GridPostListProps = {
   posts?: Models.Document[];
@@ -33,11 +34,21 @@ const GridPostList = ({
               </h2>
             </div>
             <Link to={`/posts/${post.$id}`} className="grid-post_link">
-              <img
-                src={post.imageUrl}
-                alt="post"
-                className="h-full w-full object-cover"
-              />
+              {post.typeFile == "video/mp4" ? (
+                <div className="flex flex-1 flex-center rounded-3xl">
+                  <ReactPlayer
+                    width={"auto"}
+                    url={post?.imageUrl}
+                    controls={true}
+                  />
+                </div>
+              ) : (
+                <img
+                  src={post.imageUrl}
+                  alt="post"
+                  className="h-full w-full object-cover"
+                />
+              )}
             </Link>
 
             <div className="grid-post_user ">

@@ -9,6 +9,7 @@ import {
   useGetUserPost,
 } from "@/lib/react-query/queriesAndMutations";
 import { timeAgo } from "@/lib/utils";
+import ReactPlayer from "react-player";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -55,12 +56,23 @@ const PostDetail = () => {
         {isLoading || !post ? (
           <Loader />
         ) : (
-          <div className="post_details-card">
-            <img
-              src={post?.imageUrl}
-              alt="creator"
-              className="post_details-img"
-            />
+          <div className="post_details-card overflow-hidden">
+            {post.typeFile == "video/mp4" ? (
+              <div className="flex flex-1 flex-center rounded-3xl">
+                <ReactPlayer
+                  width={"500px"}
+                  height={"fit-content"}
+                  url={post?.imageUrl}
+                  controls={true}
+                />
+              </div>
+            ) : (
+              <img
+                src={post?.imageUrl}
+                alt="creator"
+                className="post_details-img"
+              />
+            )}
 
             <div className="post_details-info">
               <div className="flex-between w-full">

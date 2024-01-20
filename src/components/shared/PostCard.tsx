@@ -4,6 +4,7 @@ import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 import PostStates from "./PostStates";
 import OverFlowText from "./OverFlowText";
+import ReactPlayer from "react-player";
 
 type PostCardProps = {
   post: Models.Document;
@@ -66,11 +67,17 @@ const PostCard = ({ post }: PostCardProps) => {
         </ul>
       </div>
       <Link to={`/posts/${post.$id}`}>
-        <img
-          src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
-          className="post-card_img"
-          alt=""
-        />
+        {post.typeFile == "video/mp4" ? (
+          <div className="flex flex-1 flex-center rounded-3xl">
+            <ReactPlayer url={post?.imageUrl} controls={true} />
+          </div>
+        ) : (
+          <img
+            src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
+            className="post-card_img"
+            alt=""
+          />
+        )}
       </Link>
       <PostStates post={post} userId={user.id} />
     </div>

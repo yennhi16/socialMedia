@@ -1,18 +1,32 @@
 import { memo, useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 import { Button } from "../ui/button";
-
+// import React from "react";
+import ReactPlayer from "react-player";
 type FileUploaderProps = {
   fieldChange: (files: File[]) => void;
   mediaUrl: string;
+  videoLink: string;
 };
-const UploadFile = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
+const UploadFile = ({
+  fieldChange,
+  mediaUrl,
+  videoLink,
+}: FileUploaderProps) => {
   const [file, setFile] = useState<File[]>([]);
-  console.log(mediaUrl);
+
   const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
 
+  const [videoUrl, setVideoUrl] = useState<string>(videoLink);
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
+      console.log({ acceptedFiles });
+      if (acceptedFiles[0].type == "video/mp4") {
+        setFileUrl("");
+        setVideoUrl(URL.createObjectURL(acceptedFiles[0]));
+        fieldChange(acceptedFiles);
+        return;
+      }
       setFile(acceptedFiles);
       fieldChange(acceptedFiles);
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
@@ -22,16 +36,13 @@ const UploadFile = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".png", ".jpg", ".jpeg", ".svg"],
+      "image/*": [".png", ".jpg", ".jpeg", ".svg", ".mp4"],
     },
     multiple: true,
   });
 
   return (
-    <div
-      {...getRootProps()}
-      className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer"
-    >
+    <div className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
       <input {...getInputProps()} className="cursor-pointer" />
 
       {fileUrl ? (
@@ -39,10 +50,21 @@ const UploadFile = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
           <div className="flex flex-1 justify-center w-full p-5 lg:p-10">
             <img src={fileUrl} alt="" className="file_uploader-img" />
           </div>
-          <p className="file_uploader-label">Click or drag photo to</p>
+          <p {...getRootProps()} className="file_uploader-label">
+            Click or drag photo to
+          </p>
+        </>
+      ) : videoUrl ? (
+        <>
+          <div className="flex flex-1 justify-center w-full p-5 lg:p-10">
+            <ReactPlayer url={videoUrl} controls={true} />
+          </div>
+          <p {...getRootProps()} className="file_uploader-label">
+            Click or drag photo to
+          </p>
         </>
       ) : (
-        <div className="file_upload-box p-10 text-center">
+        <div {...getRootProps()} className="file_upload-box p-10 text-center">
           <div className="w-full flex flex-center">
             <img
               src="/assets/icons/file-upload.svg"

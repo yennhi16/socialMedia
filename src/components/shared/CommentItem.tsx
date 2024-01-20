@@ -1,9 +1,9 @@
+import { timeAgo } from "@/lib/utils";
 
 type CommentItemProps = {
   comment?: any;
 };
 export const CommentItem = ({ comment }: CommentItemProps) => {
-  console.log("commentItem");
   return (
     <div className="py-4 flex">
       <img
@@ -14,10 +14,15 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
         alt=""
       />
       <div className="content bg-dark-4 p-4 rounded-xl ml-2">
-        <h3 className=" font-bold text-primary-500 mb-1">
-          {comment.creatorName}
-        </h3>
-        <div className=" text-sm">{comment.content}</div>
+        <div className="flex justify-between items-center">
+          <h3 className="font-bold text-primary-500 mb-1 ">
+            {comment.creatorName}
+          </h3>
+          <span className=" text-xs text-primary-500 font-light ml-6">
+            {timeAgo(comment.$createdAt)}
+          </span>
+        </div>
+        <div className="text-sm">{comment.content}</div>
       </div>
     </div>
   );

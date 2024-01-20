@@ -6,7 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -17,7 +17,7 @@ import { PostValidattion } from "@/lib/validation";
 import { Models } from "appwrite";
 import {
   useCreatePost,
-  useUpdatePost
+  useUpdatePost,
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
@@ -114,7 +114,12 @@ export const PostForm = ({ post, action }: PostFormProps) => {
                 <FormControl>
                   <UploadFile
                     fieldChange={field.onChange}
-                    mediaUrl={post?.imageUrl}
+                    mediaUrl={
+                      post?.typeFile !== "video/mp4" ? post?.imageUrl : ""
+                    }
+                    videoLink={
+                      post?.typeFile == "video/mp4" ? post?.imageUrl : ""
+                    }
                   />
                 </FormControl>
 

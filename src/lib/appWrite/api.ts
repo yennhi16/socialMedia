@@ -3,7 +3,7 @@ import {
   INewPost,
   INewUser,
   IUpdatePost,
-  IUpdateUser,
+  IUpdateUser
 } from "@/types";
 import { account, appwiteConfig, avatars, database, storage } from "./config";
 import { ID, Query } from "appwrite";
@@ -279,11 +279,15 @@ export async function createPost(post: INewPost) {
   try {
     console.log("create post", post);
     const uploadFile = await fileUpload(post.file[0]);
-
+    console.log({ uploadFile });
     if (!uploadFile) throw Error;
 
-    const fileUrl = getFilePriview(uploadFile.$id);
+    const fileUrl =
+      uploadFile.mimeType == "video/mp4"
+        ? getVideoUpload(uploadFile.$id)
+        : getFilePriview(uploadFile.$id);
 
+    console.log({ fileUrl });
     if (!fileUrl) {
       deleteFile(uploadFile.$id);
       throw Error;
@@ -301,6 +305,7 @@ export async function createPost(post: INewPost) {
         location: post.location,
         tags: tags,
         imageID: uploadFile.$id,
+        typeFile: uploadFile.mimeType,
       }
     );
 
@@ -322,6 +327,15 @@ export async function fileUpload(file: File) {
       file
     );
     return uploadFile;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function getVideoUpload(fileId: string) {
+  try {
+    const fileUrl = storage.getFileView(appwiteConfig.storageId, fileId);
+    if (!fileUrl) throw Error;
+    return fileUrl;
   } catch (error) {
     console.log(error);
   }
@@ -362,20 +376,29 @@ export async function updatePost(post: IUpdatePost) {
     let image = {
       imageUrl: post.imageUrl,
       imageId: post.imageId,
+      typeFile: post.file[0].type,
     };
     if (hasFileUpdate) {
       const uploadFIle = await fileUpload(post.file[0]);
       if (!uploadFIle) throw Error;
 
-      const fileUrl = getFilePriview(uploadFIle.$id);
+      const fileUrl =
+        uploadFIle.mimeType == "video/mp4"
+          ? getVideoUpload(uploadFIle.$id)
+          : getFilePriview(uploadFIle.$id);
 
       if (!fileUrl) {
         await deleteFile(uploadFIle.$id);
         throw Error;
       }
-      image = { ...image, imageId: uploadFIle.$id, imageUrl: fileUrl };
+      image = {
+        ...image,
+        imageId: uploadFIle.$id,
+        imageUrl: fileUrl,
+        typeFile: uploadFIle.mimeType,
+      };
     }
-
+    console.log({ image });
     const tags = post.tags?.replace(/ /g, "").split(",") || [];
 
     const updatePost = await database.updateDocument(
@@ -388,6 +411,7 @@ export async function updatePost(post: IUpdatePost) {
         imageID: image.imageId,
         location: post.location,
         tags: tags,
+        typeFile: image.typeFile,
       }
     );
 
