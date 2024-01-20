@@ -25,8 +25,6 @@ export const Comments = ({ postId }: CommentProps) => {
 
   const theme: Theme = Theme.DARK;
 
-  console.log("comment", comments?.documents);
-
   const {
     mutateAsync: addComment,
     isLoading: addCommentLoading,
@@ -76,7 +74,11 @@ export const Comments = ({ postId }: CommentProps) => {
           <Loader />
         ) : (
           commentList?.map((item) => (
-            <CommentItem key={item.$id} comment={item} />
+            <CommentItem
+              allowDelete={item.creatorId == currentUser.id}
+              key={item.$id}
+              comment={item}
+            />
           ))
         )}
       </div>

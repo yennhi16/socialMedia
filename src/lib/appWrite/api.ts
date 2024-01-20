@@ -3,7 +3,7 @@ import {
   INewPost,
   INewUser,
   IUpdatePost,
-  IUpdateUser
+  IUpdateUser,
 } from "@/types";
 import { account, appwiteConfig, avatars, database, storage } from "./config";
 import { ID, Query } from "appwrite";
@@ -655,6 +655,20 @@ export async function getCommentOfPost(postId: string) {
     if (!listComment) throw Error;
     // console.log({ listComment });
     return listComment;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteComment(commentId: string) {
+  try {
+    const status = await database.deleteDocument(
+      appwiteConfig.databaseId,
+      appwiteConfig.commentsCollectionId,
+      commentId
+    );
+    if (!status) throw Error;
+    return { status: "ok" };
   } catch (error) {
     console.log(error);
   }

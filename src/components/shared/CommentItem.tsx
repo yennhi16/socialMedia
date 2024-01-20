@@ -1,9 +1,25 @@
+import { useDeleteComment } from "@/lib/react-query/queriesAndMutations";
 import { timeAgo } from "@/lib/utils";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { useToast } from "../ui/use-toast";
+import Loader from "./Loader";
 
 type CommentItemProps = {
   comment?: any;
+  allowDelete?: boolean;
 };
-export const CommentItem = ({ comment }: CommentItemProps) => {
+export const CommentItem = ({ comment, allowDelete }: CommentItemProps) => {
+  const { mutateAsync: deleteComment, isLoading, isError } = useDeleteComment();
+  const { toast } = useToast();
+  const handleDeleteComment = async (commentId: string) => {
+    const response = await deleteComment(commentId);
+    if (isError) {
+      toast({ title: "Delete Comment failed" });
+    }
+    if (response?.status == "ok") {
+      toast({ title: "Delete Comment successfully" });
+    }
+  };
   return (
     <div className="py-4 flex">
       <img
@@ -23,6 +39,19 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
           </span>
         </div>
         <div className="text-sm">{comment.content}</div>
+        {allowDelete && (
+          <div className=" flex justify-end">
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <Icon
+                onClick={() => handleDeleteComment(comment.$id)}
+                className=" text-primary-600 cursor-pointer"
+                icon="fluent:delete-32-regular"
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

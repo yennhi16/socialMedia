@@ -77,9 +77,14 @@ const UploadFile = ({
           <h3 className="base-medium text-light-2 mb-2 mt-6">
             Drag photo here
           </h3>
-          <p className="text-light-4 small-regular mb-6">SVG, PNG, JPG</p>
+          <p className="text-light-4 small-regular mb-4">SVG, PNG, JPG, MP4 </p>
+          <p className="text-light-4 text-xs font-light mb-6">
+            Please don't upload file exceed 10MB
+          </p>
 
-          <Button className="shad-button_dark_4">Select from computer</Button>
+          <Button className="shad-button_dark_4 w-full">
+            Select from computer
+          </Button>
         </div>
       )}
     </div>

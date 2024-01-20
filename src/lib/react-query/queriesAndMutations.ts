@@ -16,6 +16,7 @@ import {
   addFollowers,
   createPost,
   createUserAccount,
+  deleteComment,
   deleteFollow,
   deletePost,
   deleteSavedPost,
@@ -319,5 +320,17 @@ export const useGetCommentOfPost = (postId: string) => {
   return useQuery({
     queryFn: () => getCommentOfPost(postId),
     queryKey: [QUERY_KEYS.GET_COMMENTS, postId],
+  });
+};
+
+export const useDeleteComment = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (commentId: string) => deleteComment(commentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_COMMENTS],
+      });
+    },
   });
 };
